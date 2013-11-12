@@ -1,0 +1,20 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+  <context:property-placeholder properties-ref="defaults" system-properties-mode="OVERRIDE" />
+  <util:properties id="defaults">
+    <prop key="selenium.driver">org.openqa.selenium.chrome.ChromeDriver</prop>
+  </util:properties>
+
+
+  <bean id="browser" class="org.agileware.test.web.SharedWebDriver" factory-method="open">
+    <constructor-arg>
+      <bean id="browserClass" class="java.lang.Class" factory-method="forName">
+        <constructor-arg value="${selenium.driver}" />
+      </bean>
+    </constructor-arg>
+  </bean>
+</beans>
