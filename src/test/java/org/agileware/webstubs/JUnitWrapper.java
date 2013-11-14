@@ -1,8 +1,6 @@
 package org.agileware.webstubs;
 
-import org.junit.experimental.theories.suppliers.TestedOn;
 import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;

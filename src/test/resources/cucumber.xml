@@ -12,7 +12,7 @@
 
   <bean id="browser" class="org.agileware.test.web.SharedWebDriver" factory-method="open">
     <constructor-arg>
-      <bean id="browserClass" class="java.lang.Class" factory-method="forName">
+      <bean class="java.lang.Class" factory-method="forName">
         <constructor-arg value="${selenium.driver}" />
       </bean>
     </constructor-arg>

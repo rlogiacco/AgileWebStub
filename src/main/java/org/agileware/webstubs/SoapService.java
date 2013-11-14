@@ -13,6 +13,13 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.integration.Message;
+import org.springframework.integration.channel.DirectChannel;
+import org.springframework.integration.core.MessagingTemplate;
+import org.springframework.integration.message.GenericMessage;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -25,6 +32,27 @@ public class SoapService extends Service {
 			.newInstance();
 	
 	private Document document;
+	
+	public static void main(String... args) throws Exception {
+        LoggerFactory.getLogger(SoapService.class).info("test");
+        ApplicationContext ctx =
+            new ClassPathXmlApplicationContext("spring/services.xml");
+        
+        // Channel
+        DirectChannel channel = ctx.getBean("viaWebService", DirectChannel.class);
+        
+        MessagingTemplate template = new MessagingTemplate();
+
+        Message<?> reply = template.sendAndReceive(channel, new GenericMessage<String>("72"));
+        System.out.println(reply.getPayload());
+        
+        DirectChannel channel12 = ctx.getBean("viaWebService12", DirectChannel.class);
+        
+        MessagingTemplate template12 = new MessagingTemplate();
+
+        Message<?> reply12 = template12.sendAndReceive(channel12, new GenericMessage<String>("72"));
+        System.out.println(reply12.getPayload());
+    }
 	
 	public void setBody(InputStream body) throws Exception {
 		DocumentBuilder builder = documentFactory.newDocumentBuilder();

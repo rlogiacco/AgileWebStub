@@ -20,7 +20,7 @@
 
   <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
     <constructor-arg ref="mongo" />
-    <constructor-arg name="databaseName" value="geospatial" />
+    <constructor-arg name="databaseName" value="webstubs" />
   </bean>
 
   <mongo:repositories base-package="org.agileware" />

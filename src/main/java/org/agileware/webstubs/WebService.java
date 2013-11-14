@@ -15,20 +15,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
-@RequestMapping("/service")
+@RequestMapping(value = "/service", consumes = "application/json", produces = "application/json")
 class WebService {
 
 	@Autowired
 	ServiceRepository serviceRepository;
 	
-	@RequestMapping(method = RequestMethod.POST, consumes = {"application/json"})
+	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public @ResponseBody Service create(@RequestBody Service service) {
 		serviceRepository.save(service);
 		return service;
 	}
 	
-	@RequestMapping(value="/{id}", method = RequestMethod.DELETE, consumes = {"application/json"})
+	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> delete(@PathVariable String id) {
 		if (serviceRepository.exists(id)) {
 			serviceRepository.delete(id);
@@ -38,7 +38,7 @@ class WebService {
 		}
 	}
 	
-	@RequestMapping(value="/{id}", method = RequestMethod.PUT, consumes = {"application/json"})
+	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
 	public @ResponseBody Service update(@PathVariable String id, @RequestBody Service service) {
 		Service exisisting = serviceRepository.findOne(id);
 		BeanUtils.copyProperties(service, exisisting, new String[] {"id"});
@@ -56,10 +56,5 @@ class WebService {
 	public @ResponseBody List<Service> list() {
 		List<Service> services = serviceRepository.findAll();
 		return services;
-	}
-
-	@RequestMapping(value = "/test2")
-	public @ResponseBody String verify2() {
-		return " RECEIVED! ";
 	}
 }
